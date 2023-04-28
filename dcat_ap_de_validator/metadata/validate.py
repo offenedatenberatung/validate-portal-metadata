@@ -1,10 +1,5 @@
 import requests
 import json
-import argparse
-
-"""
-https://www.offenesdatenportal.de/api/3/action/package_search?fq=organization:moers
-"""
 
 
 VALIDATION_API_URL = "https://www.itb.ec.europa.eu/shacl/dcat-ap.de/api/validate"
@@ -19,31 +14,8 @@ def severity_key(severity):
         return "info"
 
 
-def get_package_list(url):
-    api_path = "api/3/action/package_list"
-    full_url = url + api_path
-
-    response = requests.get(full_url)
-
-    if response.status_code == 200:
-        data = json.loads(response.content)
-        result = data["result"]
-        return result
-    else:
-        print(f"Error fetching data from {full_url}. Status code: {response.status_code}")
-
-
-def generate_validation_url(url, package_name):
-    return f"{url}dcatapde/dataset/{package_name}.xml"  # DKAN
-    return f"{url}dataset/{package_name}.rdf"  # CKAN
-
-
-def package_url(url, package_name):
-    return f"{url}dataset/{package_name}"
-
-
 def extract_validation_results(json_ld):
-    result = { "valid": False, "results": [] , "warnings": 0, "errors": 0, "info": 0}
+    result = { "valid": False, "results": [] , "warning": 0, "error": 0, "info": 0}
 
     for graph_item in json_ld.get("@graph", []):
         result_type =graph_item.get("@type", "")
@@ -59,7 +31,7 @@ def extract_validation_results(json_ld):
     return result
 
 
-def validate_package(url):
+def validate(url):
     payload = {
         "contentToValidate": url,
         "validationType": "v20_de_spec_implr"
@@ -89,21 +61,3 @@ def validate_package(url):
         print(f"Error validating package at {url}. Status code: {response.status_code}")
 
     return validation_results
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Validate packages from CKAN instance")
-    parser.add_argument("url", type=str, help="URL of CKAN instance")
-    args = parser.parse_args()
-
-    package_list = get_package_list(args.url)
-    results = []
-
-    for package_name in package_list:
-        validation_url = generate_validation_url(args.url, package_name)
-        result = validate_package(validation_url)
-        # count errors and warnings, successes
-        results.append({"package": package_name, "url": package_url(args.url, package_name), "result": result})
-
-    with open("validation.json", "w") as f:
-        json.dump(results, f)
