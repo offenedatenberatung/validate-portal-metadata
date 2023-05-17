@@ -2,10 +2,10 @@ from setuptools import setup, find_packages
 
 setup(
         name="dcat_ap_de_validator",
-        version="0.1.2",
+        version="1.0.0",
         author="Mila Frerichs",
         author_email="mila@offenedatenberatung.de",
-        description="",
+        description="Validator for DCAT-AP.de Metadatasets using the EU Validator Endpoint",
         url="",
         packages=find_packages(),
         install_requires=[
