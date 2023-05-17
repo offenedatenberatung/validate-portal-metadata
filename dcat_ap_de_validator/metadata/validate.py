@@ -31,7 +31,7 @@ def extract_validation_results(json_ld):
     return result
 
 
-def validate(url):
+def validate(url, verbose=False):
     payload = {
         "contentToValidate": url,
         "validationType": "v20_de_spec_implr"
@@ -50,14 +50,13 @@ def validate(url):
         validation_results = extract_validation_results(data)
 
         if validation_results["valid"]:
-            print(f"Package validated successfully: {url}")
+            if verbose:
+                print(f"Package validated successfully: {url}")
         else:
-            print(f"Validation failed for package {url}:")
-            """
-            for result in validation_results:
-                print(f"- {result['message']} ({result['path']})")
-            """
+            if verbose:
+                print(f"Validation failed for package {url}:")
     else:
-        print(f"Error validating package at {url}. Status code: {response.status_code}")
+        if verbose:
+            print(f"Error validating package at {url}. Status code: {response.status_code}")
 
     return validation_results
