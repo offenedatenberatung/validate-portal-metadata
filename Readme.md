@@ -4,6 +4,13 @@ Wir können eine Portal URL (DKAN oder CKAN Portale) übergeben und dann bekomme
 JSON Datei mit der Validierung aller vorhandenen Datensätze.
 
 
+# Installation
+Zur Installation des Packages mit pipx (pip geht auch):
+
+```bash
+pipx install dcat-ap-de-validator
+```
+
 ## Verfügare Kommandos:
 
 - `portal` für Portalvalidierung
@@ -25,13 +32,6 @@ Direkter aufruf:
 
 ```bash
 python -m dcat_ap_de_validator portal https://opendata.heilbronn.de/ -p dkan
-```
-
-# Installation
-Zur Installation des Packages für vereinfachten Aufruf:
-
-```bash
-pip install .
 ```
 
 # Rückgabe
