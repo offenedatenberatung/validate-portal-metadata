@@ -23,6 +23,7 @@ classifiers = [
 ]
 dependencies = [
     "requests",
+		"rich",
 ]
 dynamic = ["version"]
 
