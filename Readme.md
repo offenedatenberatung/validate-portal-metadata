@@ -3,6 +3,8 @@
 Wir können eine Portal URL (DKAN oder CKAN Portale) übergeben und dann bekommen wir eine
 JSON Datei mit der Validierung aller vorhandenen Datensätze.
 
+![console screenshot](screenshot.png)
+
 
 # Installation
 Zur Installation des Packages mit pipx (pip geht auch):
