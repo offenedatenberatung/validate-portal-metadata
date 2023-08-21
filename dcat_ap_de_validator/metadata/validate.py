@@ -15,10 +15,10 @@ def severity_key(severity):
 
 
 def extract_validation_results(json_ld):
-    result = { "valid": False, "results": [] , "warning": 0, "error": 0, "info": 0}
+    result = {"valid": False, "results": [], "warning": 0, "error": 0, "info": 0}
 
     for graph_item in json_ld.get("@graph", []):
-        result_type =graph_item.get("@type", "")
+        result_type = graph_item.get("@type", "")
         if result_type == "sh:ValidationReport":
             result["valid"] = graph_item["sh:conforms"]
         if result_type == "sh:ValidationResult":
@@ -55,8 +55,7 @@ def validate(url, verbose=False):
         else:
             if verbose:
                 print(f"Validation failed for package {url}:")
+        return validation_results
     else:
         if verbose:
             print(f"Error validating package at {url}. Status code: {response.status_code}")
-
-    return validation_results
